@@ -1,0 +1,53 @@
+# Python-related
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyz
+*.pyw
+*.pyz/
+*.pyw/
+
+# Virtual environments (e.g. virtualenv, pipenv, poetry)
+venv/
+env/
+env_bak/
+.env
+.env.*
+
+# Compiled files
+*.so
+*.pyc
+*.pyo
+*.dll
+*.exe
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Dependency directories
+lib/
+lib64/
+site-packages/
+
+# Editor and IDE files
+.idea/
+.vscode/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# Local development configuration
+*.local.yml
+*.local.json
+*.local.ini
+
+# Project-specific
+/.cache/
+/.pytest_cache/
+/coverage/
