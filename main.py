@@ -23,44 +23,49 @@ def plot_points(points):
 
 if __name__ == "__main__":
     random_100_points = generate_random_points(num_points=6, min_value=0, max_value=100)
-    
+    random_70_points = generate_random_points(num_points=70, min_value=0, max_value=100)
+    random_2_points_rectangle = generate_random_points(num_points=2,min_value=1,max_value=99)
     # TODO: IN FINAL MODE REMOVE THIS
     # Plot the hardcoded points
-    plot_points(hardcoded_points)
+    # plot_points(hardcoded_points)
     
         
-    # algorithms = [
-    #     ConvexHullAlgorithms.INCREMENTAL_ALGORITHM,
-    #     ConvexHullAlgorithms.GIFT_WRAPPING,
-    #     ConvexHullAlgorithms.DIVIDE_AND_CONQUER,
-    #     ConvexHullAlgorithms.QUICKHULL
-    # ]
+    algorithms = [
+        # ConvexHullAlgorithms.INCREMENTAL_ALGORITHM,
+        # ConvexHullAlgorithms.GIFT_WRAPPING,
+        # ConvexHullAlgorithms.DIVIDE_AND_CONQUER,
+        ConvexHullAlgorithms.QUICKHULL
+    ]
 
-    # convex_hull_object = ConvexHull()
-    # times_object = {}
+    convex_hull_object = ConvexHull()
+    times_object = {}
 
-    # for algorithm in algorithms:
-    #     start_time = time.time()
+    for algorithm in algorithms:
+        start_time = time.time()
         
-    #     convex_hull_object.set_algorithm(algorithm)
-    #     convex_hull_result = convex_hull_object.compute(random_100_points)
+        convex_hull_object.set_algorithm(algorithm)
+        convex_hull_result = convex_hull_object.compute(random_100_points)
         
-    #     convex_hull_object_list_result = convex_hull_result.print_as_list()
-    #     convex_hull_object_diagram_result = convex_hull_result.plot_diagram()
+        convex_hull_object_list_result = convex_hull_result.print_as_list()
+        convex_hull_object_diagram_result = convex_hull_result.plot_diagram()
         
-    #     end_time = time.time()
-    #     elapsed_time = end_time - start_time
+        end_time = time.time()
+        elapsed_time = end_time - start_time
         
-    #     # Store the elapsed_time in the times_object dictionary
-    #     times_object[str(algorithm)] = elapsed_time
+        # Store the elapsed_time in the times_object dictionary
+        times_object[str(algorithm)] = elapsed_time
 
     # Use the helper function to print the table
-    # print_algorithm_time_table(times_object)
-    points = [(2, 3), (5, 4), (9, 6), (4, 7), (8, 1), (7, 2)]
-    search_region = Rectangle((1, 1), (7, 5))
+    print_algorithm_time_table(times_object)
     
-    geometrical_search_object = GeometricalSearch()
-    geometrical_search_object.set_algorithm(GeometricalSearchAlgorithms.KD_TREE_2D)
-    results = geometrical_search_object.compute(points, search_region)
+    # Geometrical Search
+    
+    # print(random_70_points)
+    # print(random_2_points_rectangle)
+    # search_region = Rectangle(random_2_points_rectangle[0], random_2_points_rectangle[1])
+    
+    # geometrical_search_object = GeometricalSearch()
+    # geometrical_search_object.set_algorithm(GeometricalSearchAlgorithms.KD_TREE_2D)
+    # results = geometrical_search_object.compute(random_70_points, search_region)
 
-    print(f"Points in the region {search_region.bottom_left} to {search_region.top_right}: {results}")
+    # print(f"Points in the region {search_region.bottom_left} to {search_region.top_right}: {results}")

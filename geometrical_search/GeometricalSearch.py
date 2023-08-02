@@ -1,3 +1,4 @@
+from typing import List, Tuple
 from enum import Enum
 from geometrical_search.common.Rectangle import Rectangle
 from geometrical_search.common.KDTree import KDTree
@@ -11,14 +12,14 @@ class GeometricalSearch:
         self.algorithm = None
         self.points = None
 
-    def set_algorithm(self, algorithm: GeometricalSearchAlgorithms):
+    def set_algorithm(self, algorithm: GeometricalSearchAlgorithms) -> 'GeometricalSearch':
         if algorithm == GeometricalSearchAlgorithms.KD_TREE_2D:
             self.algorithm = algorithm
         else:
             raise ValueError("Invalid algorithm specified. Please choose 'GeometricalSearchAlgorithms.KD_TREE_2D'")
         return self
 
-    def compute(self, points, search_region: Rectangle):
+    def compute(self, points, search_region: Rectangle) -> List[Tuple[float, float]]:
         self.points = points
         
         if self.algorithm == GeometricalSearchAlgorithms.KD_TREE_2D:

@@ -16,7 +16,7 @@ class ConvexHull:
         self.algorithm = None
         self.result = []
         
-    def set_algorithm(self, algorithm: ConvexHullAlgorithms) -> None:
+    def set_algorithm(self, algorithm: ConvexHullAlgorithms) -> 'ConvexHull':
         if algorithm == ConvexHullAlgorithms.INCREMENTAL_ALGORITHM:
             self.algorithm = incremental_algorithm
         elif algorithm == ConvexHullAlgorithms.GIFT_WRAPPING:
@@ -29,17 +29,17 @@ class ConvexHull:
             raise ValueError("Invalid algorithm specified. Please choose 'ConvexHullAlgorithms.INCREMENTAL_ALGORITHM', 'ConvexHullAlgorithms.GIFT_WRAPPING', or 'ConvexHullAlgorithms.DIVIDE_AND_CONQUER', or 'ConvexHullAlgorithms.QUICKHULL'")
         return self
         
-    def compute(self, points):
+    def compute(self, points) -> 'ConvexHull':
         self.result = self.algorithm(points)
         return self
 
-    def print_as_list(self):
+    def print_as_list(self) -> 'ConvexHull':
         print(self.result)
         return self
     
-    def plot_diagram(self):
-        x_values, y_values = zip(*self.result)  # Unzip x and y coordinates
-        x_values += (x_values[0],)  # Repeat the first point to close the hull
+    def plot_diagram(self) -> 'ConvexHull':
+        x_values, y_values = zip(*self.result)
+        x_values += (x_values[0],)
         y_values += (y_values[0],)
 
         plt.figure(figsize=(6, 6))

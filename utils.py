@@ -1,6 +1,7 @@
+from typing import List, Tuple
 import random
 
-def generate_random_points(num_points, min_value=0, max_value=10):
+def generate_random_points(num_points, min_value=0, max_value=10) -> List[Tuple[float, float]]:
     points = []
     for _ in range(num_points):
         x = round(random.uniform(min_value, max_value), 0)
@@ -8,7 +9,7 @@ def generate_random_points(num_points, min_value=0, max_value=10):
         points.append((x, y))
     return points
 
-def print_algorithm_time_table(times_object):   
+def print_algorithm_time_table(times_object) -> None:   
     # Determine the maximum length of the algorithm name
     max_length = max([len(name) for name in times_object.keys()])
 
