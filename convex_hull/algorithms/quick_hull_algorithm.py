@@ -1,40 +1,62 @@
-def quick_hull_algorithm(points):
-    def distance_from_line(p, q, r):
-        # Function to compute the perpendicular distance from point r to the line passing through points p and q
-        return abs((q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0]))
+def quick_hull_algorithm(points):        
 
-    def is_right_of_line(p, q, r):
-        # Function to check if point r is to the right of the directed line passing through points p and q
-        return (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0]) < 0
+    def _side(p1, p2, p):
+        return (p2[0] - p1[0]) * (p[1] - p1[1]) - (p2[1] - p1[1]) * (p[0] - p1[0])
+    
 
-    def quick_hull_recursive(A, B, S):
-        if len(S) < 3:
-            return S
+    def _distance(p1, p2, p):
+        return abs((p2[1] - p1[1]) * p[0] - (p2[0] - p1[0]) * p[1] + p2[0] * p1[1] - p2[1] * p1[0])
+    
 
-        C = max(S, key=lambda p: distance_from_line(A, B, p))
-        M = [p for p in S if is_right_of_line(A, C, p)]
-        N = [p for p in S if is_right_of_line(C, B, p)]
+    def _find_extreme_points(points):
 
-        convex_hull_M = quick_hull_recursive(A, C, M)
-        convex_hull_N = quick_hull_recursive(C, B, N)
+        leftmost = min(points, key=lambda p: p[0])
 
-        return convex_hull_M + [C] + convex_hull_N
+        rightmost = max(points, key=lambda p: p[0])
 
+        topmost = max(points, key=lambda p: p[1])
+
+        bottommost = min(points, key=lambda p: p[1])
+
+        return leftmost, rightmost, topmost, bottommost
+   
+    def _quick_hull_recursive(p1, p2, points):
+
+        if not points:
+            return []
+
+        # find the point farthest from the line segment p1-p2
+
+        max_dist = -1
+
+        max_point = None
+
+        for p in points:
+
+            d = _distance(p1, p2, p)
+
+            if _side(p1, p2, p) > 0 and d > max_dist:
+                max_dist = d
+                max_point = p
+
+        # divide the points based on the two segments created by max_point
+
+        s1 = [p for p in points if _side(p1, max_point, p) > 0]
+        s2 = [p for p in points if _side(max_point, p2, p) > 0]
+        
+        return _quick_hull_recursive(p1, max_point, s1) + [max_point] + _quick_hull_recursive(max_point, p2, s2)
+    
     n = len(points)
+
     if n < 3:
-        return points  # Convex hull is the same as the input points
+        return points
+    
 
-    # Find the leftmost and rightmost points
-    leftmost = min(points, key=lambda p: (p[0], p[1]))
-    rightmost = max(points, key=lambda p: (p[0], p[1]))
+    leftmost, rightmost, topmost, bottommost = _find_extreme_points(points)
+    upper_hull = _quick_hull_recursive(leftmost, rightmost, [p for p in points if _side(leftmost, rightmost, p) > 0])
 
-    # Divide the points into two sets: S1 contains points to the right of line AB, and S2 contains points to the right of line BA
-    S1 = [p for p in points if is_right_of_line(leftmost, rightmost, p)]
-    S2 = [p for p in points if is_right_of_line(rightmost, leftmost, p)]
+    lower_hull = _quick_hull_recursive(rightmost, leftmost, [p for p in points if _side(rightmost, leftmost, p) > 0])
 
-    # Compute the convex hull recursively for S1 and S2
-    convex_hull_S1 = quick_hull_recursive(leftmost, rightmost, S1)
-    convex_hull_S2 = quick_hull_recursive(rightmost, leftmost, S2)
+    return [leftmost] + upper_hull + [rightmost] + lower_hull
+    return points
 
-    # Merge the convex hulls of S1, S2, and the endpoints of the line segment AB
-    return convex_hull_S1 + [leftmost] + convex_hull_S2
