@@ -1,60 +1,22 @@
-def quick_hull_algorithm(points):        
+import numpy as np
+from scipy.spatial import ConvexHull
+import matplotlib.pyplot as plt
 
-    def _side(p1, p2, p):
-        return (p2[0] - p1[0]) * (p[1] - p1[1]) - (p2[1] - p1[1]) * (p[0] - p1[0])
+def quick_hull_algorithm(points):
+    hull = ConvexHull(points)
     
-
-    def _distance(p1, p2, p):
-        return abs((p2[1] - p1[1]) * p[0] - (p2[0] - p1[0]) * p[1] + p2[0] * p1[1] - p2[1] * p1[0])
-    
-
-    def _find_extreme_points(points):
-
-        leftmost = min(points, key=lambda p: p[0])
-
-        rightmost = max(points, key=lambda p: p[0])
-
-        topmost = max(points, key=lambda p: p[1])
-
-        bottommost = min(points, key=lambda p: p[1])
-
-        return leftmost, rightmost, topmost, bottommost
-   
-    def _quick_hull_recursive(p1, p2, points):
-
-        if not points:
-            return []
-
-        # find the point farthest from the line segment p1-p2
-
-        max_dist = -1
-
-        max_point = None
-
-        for p in points:
-
-            d = _distance(p1, p2, p)
-
-            if _side(p1, p2, p) > 0 and d > max_dist:
-                max_dist = d
-                max_point = p
-
-        # divide the points based on the two segments created by max_point
-
-        s1 = [p for p in points if _side(p1, max_point, p) > 0]
-        s2 = [p for p in points if _side(max_point, p2, p) > 0]
+    if len(points[0]) == 2:  # If the input points are 2D
+        return np.array(points)[hull.vertices].tolist()
+    elif len(points[0]) == 3:  # If the input points are 3D
+        hull_triangles = [hull.points[simplex] for simplex in hull.simplices]
         
-        return _quick_hull_recursive(p1, max_point, s1) + [max_point] + _quick_hull_recursive(max_point, p2, s2)
-    
-    n = len(points)
+        # Plot the convex hull
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.scatter(points[:,0], points[:,1], points[:,2], 'o')
+        ax.plot_trisurf(hull.points[:,0], hull.points[:,1], hull.points[:,2], triangles=hull.simplices, shade=True, color='g', alpha=0.5)
+        plt.show()
 
-    if n < 3:
-        return points
-    
-
-    leftmost, rightmost, topmost, bottommost = _find_extreme_points(points)
-    
-    upper_hull = _quick_hull_recursive(leftmost, rightmost, [p for p in points if _side(leftmost, rightmost, p) > 0])
-    lower_hull = _quick_hull_recursive(rightmost, leftmost, [p for p in points if _side(rightmost, leftmost, p) > 0])
-
-    return [leftmost] + upper_hull + [rightmost] + lower_hull
+        return hull_triangles
+    else:
+        raise ValueError("The provided points should be either 2D or 3D.")

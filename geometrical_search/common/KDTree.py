@@ -15,10 +15,6 @@ class KDTree:
     def _build_kd_tree(self, points, depth=0):
         """
         Builds a KD-tree from the given points.
-        
-        :param points: List of points to be added to the KD-tree.
-        :param depth: Current depth in the tree (used to decide the axis of split).
-        :return: Root node of the KD-tree.
         """
         # If there's only one point
         if len(points) == 1:

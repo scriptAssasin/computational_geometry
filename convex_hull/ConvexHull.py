@@ -29,8 +29,11 @@ class ConvexHull:
             raise ValueError("Invalid algorithm specified. Please choose 'ConvexHullAlgorithms.INCREMENTAL_ALGORITHM', 'ConvexHullAlgorithms.GIFT_WRAPPING', or 'ConvexHullAlgorithms.DIVIDE_AND_CONQUER', or 'ConvexHullAlgorithms.QUICKHULL'")
         return self
         
-    def compute(self, points) -> 'ConvexHull':
-        self.result = self.algorithm(points)
+    def compute(self, points, visualize_incremental_algorithm = False) -> 'ConvexHull':
+        if self.algorithm == incremental_algorithm:
+            self.result = self.algorithm(points, visualize_incremental_algorithm)
+        else:
+            self.result = self.algorithm(points)
         return self
 
     def print_as_list(self) -> 'ConvexHull':
