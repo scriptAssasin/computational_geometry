@@ -53,10 +53,8 @@ def quick_hull_algorithm(points):
     
 
     leftmost, rightmost, topmost, bottommost = _find_extreme_points(points)
+    
     upper_hull = _quick_hull_recursive(leftmost, rightmost, [p for p in points if _side(leftmost, rightmost, p) > 0])
-
     lower_hull = _quick_hull_recursive(rightmost, leftmost, [p for p in points if _side(rightmost, leftmost, p) > 0])
 
     return [leftmost] + upper_hull + [rightmost] + lower_hull
-    return points
-
