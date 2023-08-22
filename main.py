@@ -45,14 +45,14 @@ if __name__ == "__main__":
 
     
     # # Geometrical Search
-    # random_70_points = generate_random_points(num_points=70, min_value=0, max_value=100)
-    # random_2_points_rectangle = generate_random_points(num_points=2,min_value=1,max_value=99)
-    # print(random_70_points)
-    # print(random_2_points_rectangle)
-    # search_region = Rectangle(random_2_points_rectangle[0], random_2_points_rectangle[1])
+    random_70_points = generate_random_points(num_points=70, min_value=0, max_value=100)
+    random_2_points_rectangle = generate_random_points(num_points=2,min_value=1,max_value=99)
+    print(random_70_points)
+    print(random_2_points_rectangle)
+    search_region = Rectangle(random_2_points_rectangle[0], random_2_points_rectangle[1])
     
-    # geometrical_search_object = GeometricalSearch()
-    # geometrical_search_object.set_algorithm(GeometricalSearchAlgorithms.KD_TREE_2D)
-    # results = geometrical_search_object.compute(random_70_points, search_region)
+    geometrical_search_object = GeometricalSearch()
+    geometrical_search_object.set_algorithm(GeometricalSearchAlgorithms.KD_TREE_2D)
+    results = geometrical_search_object.compute(random_70_points, search_region)
 
-    # print(f"Points in the region {search_region.bottom_left} to {search_region.top_right}: {results}")
+    print(f"Points in the region {search_region.bottom_left} to {search_region.top_right}: {results}")
