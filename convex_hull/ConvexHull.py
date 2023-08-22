@@ -6,10 +6,10 @@ from convex_hull.algorithms.divide_and_conquer_algorithm import divide_and_conqu
 from convex_hull.algorithms.quick_hull_algorithm import quick_hull_algorithm
 
 class ConvexHullAlgorithms(Enum):
-    INCREMENTAL_ALGORITHM = 1
-    GIFT_WRAPPING = 2
-    DIVIDE_AND_CONQUER = 3
-    QUICKHULL = 4
+    INCREMENTAL_ALGORITHM = "Incremental Algorithm"
+    GIFT_WRAPPING = "Gift Wrapping Algorithm"
+    DIVIDE_AND_CONQUER = "Divide and Conquer Algorithm"
+    QUICKHULL = "Quickhull Algorithm"
 
 class ConvexHull:
     def __init__(self) -> None:
