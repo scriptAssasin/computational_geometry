@@ -35,7 +35,15 @@ if __name__ == "__main__":
 
     # Use the helper function to print the table
     print_algorithm_time_table(times_object)
-        
+    
+    # Quick Hull 3d
+    points = generate_random_3d_points(80)
+    convex_hull_object.set_algorithm(ConvexHullAlgorithms.QUICKHULL)
+    convex_hull_result = convex_hull_object.compute(points, False)
+    
+    print(convex_hull_result)
+
+    
     # # Geometrical Search
     # random_70_points = generate_random_points(num_points=70, min_value=0, max_value=100)
     # random_2_points_rectangle = generate_random_points(num_points=2,min_value=1,max_value=99)
